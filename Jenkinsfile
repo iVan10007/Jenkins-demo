@@ -4,28 +4,18 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Явно указываем ветку для клонирования
-                git branch: 'main', url: 'https://github.com/iVan10007/Jenkins-demo.git'
+                checkout([$class: 'GitSCM', branches: [[name: 'main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/iVan10007/Jenkins-demo.git']]])
             }
         }
         stage('Build') {
             steps {
-                // Выполняем сборку
-                echo 'Building project...'
-                bat 'echo Building complete!'
+                git branch: 'main', url: 'https://github.com/iVan10007/Jenkins-demo.git'
+                sh 'python3 ops.py'
             }
         }
         stage('Test') {
             steps {
-                // Запускаем тесты
-                echo 'Running tests...'
-                bat 'echo Tests passed!'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                // Этап деплоя
-                echo 'Deploying application...'
+                sh 'python3 -m pytest'
             }
         }
     }
