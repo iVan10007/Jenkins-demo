@@ -10,12 +10,12 @@ pipeline {
         stage('Build') {
             steps {
                 git branch: 'main', url: 'https://github.com/iVan10007/Jenkins-demo.git'
-                sh 'python3 ops.py'
+                bat 'python3 ops.py'
             }
         }
         stage('Test') {
             steps {
-                sh 'python3 -m pytest'
+                bat 'python3 -m pytest'
             }
         }
     }
